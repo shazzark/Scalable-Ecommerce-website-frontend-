@@ -62,7 +62,7 @@ export function AuthProvider({ children }) {
         name,
         email,
         password,
-        passwordConfirm: password,
+        passwordConfirm: confirm || password,
       });
       return data;
     } finally {

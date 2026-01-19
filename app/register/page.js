@@ -31,14 +31,21 @@ export default function RegisterPage() {
 
     setLoading(true);
     try {
-      await register(formData.email, formData.password, formData.name);
+      // Send correct object to backend
+      await register({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        passwordConfirm: formData.confirm,
+      });
+
       addToast("Registration successful! Please login.", "success");
       router.push("/login");
     } catch (err) {
       console.error("Registration failed:", err);
       addToast(
         err?.response?.data?.message || "Registration failed. Try again.",
-        "error"
+        "error",
       );
     } finally {
       setLoading(false);
