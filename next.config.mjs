@@ -3,16 +3,14 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 const nextConfig = {
   images: {
-    images: {
-      remotePatterns: [
-        {
-          protocol: "https",
-          hostname: "scalable-ecommerce-website-backend-api.onrender.com",
-          port: "", // empty for standard https
-          pathname: "/img/products/**",
-        },
-      ],
-    },
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "scalable-ecommerce-website-backend-api.onrender.com",
+        port: "", // leave empty for standard https
+        pathname: "/img/products/**",
+      },
+    ],
   },
 
   async rewrites() {
