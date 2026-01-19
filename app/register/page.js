@@ -32,12 +32,11 @@ export default function RegisterPage() {
     setLoading(true);
     try {
       // Send correct object to backend
-      await register({
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-        passwordConfirm: formData.confirm,
-      });
+      await register(
+        formData.name, // name
+        formData.email, // email
+        formData.password, // password
+      );
 
       addToast("Registration successful! Please login.", "success");
       router.push("/login");
@@ -53,7 +52,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center py-12">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 to-slate-800 flex items-center justify-center py-12">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
