@@ -36,7 +36,7 @@ export default function RegisterPage() {
         name: formData.name,
         email: formData.email,
         password: formData.password,
-        confirm: formData.confirm,
+        passwordConfirm: formData.confirm,
       });
 
       addToast("Registration successful! Please login.", "success");
