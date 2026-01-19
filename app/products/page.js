@@ -174,7 +174,7 @@ export default function ProductsPage() {
                             fill
                             className="object-cover"
                             sizes="(max-width: 768px) 100vw, 33vw"
-                            // unoptimized
+                            unoptimized
                           />
                         ) : (
                           <div className="flex items-center justify-center h-full text-4xl">
