@@ -37,19 +37,41 @@ export function AuthProvider({ children }) {
     initAuth();
   }, []);
 
+  // const login = async (email, password) => {
+  //   setLoading(true);
+  //   try {
+  //     const data = await authAPI.login(email, password);
+
+  //     localStorage.setItem("token", data.token); // optional
+  //     setUser(data.data.user);
+
+  //     return data;
+  //   } catch (err) {
+  //     // Throw a clearer message if password is incorrect
+  //     const message = err?.response?.data?.message || "Password is not correct";
+  //     throw new Error(message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   const login = async (email, password) => {
     setLoading(true);
     try {
-      const data = await authAPI.login(email, password);
+      const data = await authAPI.login(email.trim(), password.trim());
 
-      localStorage.setItem("token", data.token); // optional
-      setUser(data.data.user);
+      // Save token
+      localStorage.setItem("token", data.token);
 
-      return data;
+      // FETCH USER AFTER LOGIN (cookie + token now exist)
+      const me = await authAPI.getCurrentUser();
+      setUser(me.data.user);
+
+      return me;
     } catch (err) {
-      // Throw a clearer message if password is incorrect
-      const message = err?.response?.data?.message || "Password is not correct";
-      throw new Error(message);
+      throw new Error(
+        err?.response?.data?.message || "Invalid email or password",
+      );
     } finally {
       setLoading(false);
     }
