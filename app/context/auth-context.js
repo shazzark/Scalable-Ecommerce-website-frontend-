@@ -55,15 +55,22 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const register = async (name, email, password) => {
+  const register = async (name, email, password, confirm) => {
     setLoading(true);
+
     try {
+      // HARD GUARANTEE passwordConfirm is sent
+      if (!confirm) {
+        throw new Error("Password confirmation is required");
+      }
+
       const data = await authAPI.register({
-        name,
-        email,
-        password,
-        passwordConfirm: confirm,
+        name: name.trim(),
+        email: email.trim(),
+        password: password.trim(),
+        passwordConfirm: confirm.trim(),
       });
+
       return data;
     } finally {
       setLoading(false);

@@ -24,36 +24,37 @@ export default function RegisterPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password !== formData.confirm) {
+    const password = formData.password.trim();
+    const confirm = formData.confirm.trim();
+
+    // HARD BLOCK bad requests before backend
+    if (!password || !confirm) {
+      addToast("Password and confirmation are required", "error");
+      return;
+    }
+
+    if (password !== confirm) {
       addToast("Passwords do not match", "error");
       return;
     }
 
-    setLoading(true);
-
-    // <-- Add the console.log here
-    console.log({
+    // DEBUG — keep this until it works
+    console.log("Sending registration data:", {
       name: formData.name,
       email: formData.email,
-      password: formData.password,
-      passwordConfirm: formData.confirm,
+      password,
+      passwordConfirm: confirm,
     });
 
+    setLoading(true);
     try {
-      await register(
-        formData.name,
-        formData.email,
-        formData.password,
-        formData.confirm,
-      );
+      await register(formData.name, formData.email, password, confirm);
+
       addToast("Registration successful! Please login.", "success");
       router.push("/login");
     } catch (err) {
       console.error("Registration failed:", err);
-      addToast(
-        err?.response?.data?.message || "Registration failed. Try again.",
-        "error",
-      );
+      addToast(err.message || "Registration failed", "error");
     } finally {
       setLoading(false);
     }
