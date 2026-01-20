@@ -30,13 +30,21 @@ export default function RegisterPage() {
     }
 
     setLoading(true);
+
+    // <-- Add the console.log here
+    console.log({
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+      passwordConfirm: formData.confirm,
+    });
+
     try {
-      // Send correct object to backend
       await register(
         formData.name,
         formData.email,
         formData.password,
-        formData.confirm, // ADD THIS
+        formData.confirm,
       );
       addToast("Registration successful! Please login.", "success");
       router.push("/login");
